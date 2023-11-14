@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   bottomTab: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: '#3AA3A0',
+    padding: 10,
   },  
   searchBar__unclicked: {
     padding: 10,
@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     width: "90%",
   },
   inputView: {
-    backgroundColor: "#FFC0CB",
+    backgroundColor: "#6AF2F0",
     borderRadius: 30,
     width: "70%",
     height: 45,
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
     marginLeft: 20,
     fontSize: 16,
     textAlign: "center",
-    color: "blue"
+    color: "black"
   },
   buttonContainer: {
       height: 45,
@@ -70,7 +70,44 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#f0f0f0',
     padding: 20,
+  },  
+  container_p: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 20,
   },
+  container_1: {
+
+    //flex: 1, // Set flex to evenly distribute child elements
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'space-evenly', // Use space-evenly to evenly space child elements
+    backgroundColor: '#8AE2E0',
+    borderRadius: 32,
+    marginBottom: '15%', // Add margin to create space between consecutive container_1 objects
+  },
+  container_2: {
+    flexDirection: 'row', // Use flexDirection: 'row' to align items horizontally
+    borderRadius: 20,
+    padding: 5,
+    width: '100%',
+    justifyContent: 'space-evenly', // Use space-evenly to evenly space child elements
+    alignItems: 'center', // Align items in the center vertically
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  paragraph: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    marginTop: 10,
+  },
+   
   heading: {
     fontSize: 24,
     fontWeight: 'bold',

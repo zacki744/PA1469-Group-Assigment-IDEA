@@ -1,6 +1,7 @@
-import { Text, View, TextInput, Button } from 'react-native';
+import { Text, View, TextInput, Button, Image } from 'react-native';
 import React, { useState } from 'react';
 import { styles } from './../../style/style.js'
+
 
 
 export default function Profile() {
@@ -17,21 +18,31 @@ export default function Profile() {
   };
   function LoggedIn() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.heading}>Welcome to Your Home</Text>
-        <Text style={styles.paragraph}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </Text>
-        <Button
-          style={styles.buttonContainer}
-          title="Logout"
-          onPress={() => {
-            // Simulating a logout action - replace this with your actual authentication logic
-            // For demo purposes, we will just set isLoggedIn state to false
-            setEmail('');
-            setPassword('');
-            setIsLoggedIn(false);
-          }}></Button>
+      <View style={styles.container_p}>
+        <View style={styles.container_1}>
+
+          <Text style={styles.heading}>Welcome to Your Home</Text>
+        </View>
+        <View style={styles.container_1}>
+          <View style={styles.container_2}>
+            <Text style={styles.paragraph}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </Text>
+          </View>
+          <View style={styles.container_2}>
+            <Button
+              style={styles.buttonContainer}
+              title="Logout"
+              onPress={() => {
+                // Simulating a logout action - replace this with your actual authentication logic
+                // For demo purposes, we will just set isLoggedIn state to false
+                setEmail('');
+                setPassword('');
+                setIsLoggedIn(false);
+              }}
+            ></Button>
+          </View>
+        </View>
       </View>
     );
   }
