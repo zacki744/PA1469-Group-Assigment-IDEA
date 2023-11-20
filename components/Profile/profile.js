@@ -1,7 +1,15 @@
-import { Text, View, TextInput, Button, Image } from 'react-native';
+// Profile.js
+import { Text, View, TextInput, Image } from 'react-native';
 import React, { useState } from 'react';
-import { styles } from './../../style/style.js'
+import { styles } from './../../style/style.js';
+import * as C from './../../style/const.js';
+import { CustomButton } from './../obj/Button.js';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Saved from './redirectables/Saved.js';
+import AccountDetails from './redirectables/accountDetails.js';
 
+
+const Tab = createBottomTabNavigator();
 
 
 export default function Profile() {
@@ -16,22 +24,41 @@ export default function Profile() {
       setIsLoggedIn(true);
     }
   };
+
+  const getImagePath = () => {
+    // Perform your image lookup logic here
+    // If lookup fails, return the default path
+    return require('./../../assets/default-profile-picture.jpg'); // Adjust the default path as needed
+  };
+
   function LoggedIn() {
     return (
       <View style={styles.container_p}>
-        <View style={styles.container_1}>
-
-          <Text style={styles.heading}>Welcome to Your Home</Text>
+        <View style={styles.container_3}>
+          <Image source={getImagePath()} style={styles.profilePicture} />
+          <Text style={styles.heading}>Stevo jobs</Text>
         </View>
         <View style={styles.container_1}>
-          <View style={styles.container_2}>
-            <Text style={styles.paragraph}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
+        <View style={styles.container_2}>
+          <CustomButton
+              title="My account"
+              onPress={() => {
+                // redirect to my account
+                navigation.navigate('AccountDetails')
+              }}
+            />
           </View>
           <View style={styles.container_2}>
-            <Button
-              style={styles.buttonContainer}
+            <CustomButton
+              title="History"
+              onPress={() => {
+                // redirect to history
+                navigation.navigate('Saved')
+              }}
+            />
+          </View>
+          <View style={styles.container_2}>
+            <CustomButton
               title="Logout"
               onPress={() => {
                 // Simulating a logout action - replace this with your actual authentication logic
@@ -40,7 +67,8 @@ export default function Profile() {
                 setPassword('');
                 setIsLoggedIn(false);
               }}
-            ></Button>
+              style={{ backgroundColor: C.Y_PRIMARY }} // Custom button style
+            />
           </View>
         </View>
       </View>
@@ -51,27 +79,20 @@ export default function Profile() {
     return (
       <View style={styles.container}>
         <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Email"
-            onChangeText={text => setEmail(text)}
-          />
+          <TextInput style={styles.TextInput} placeholder="Email" onChangeText={(text) => setEmail(text)} />
         </View>
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
             placeholder="Password"
             secureTextEntry={true}
-            onChangeText={text => setPassword(text)}
+            onChangeText={(text) => setPassword(text)}
           />
         </View>
-        <Button 
-          style={styles.buttonContainer} 
-          title="Login" 
-          onPress={handleLogin} />
-        </View>
+        <CustomButton title="Login" onPress={handleLogin} style={{ backgroundColor: C.SECONDARY_COLOR }} /> 
+      </View>
     );
   } else {
-    return <LoggedIn /> ;
+    return <LoggedIn />;
   }
 }

@@ -10,12 +10,10 @@ const Tab = createBottomTabNavigator();
 export default function MyTabs() {
   return (
     <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: '#F6C324',
-        inactiveTintColor: 'gray',
-        tabBarStyle: {style: { backgroundColor: '#3AA3A0' }},
-      }}
       screenOptions={({ route }) => ({
+        tabBarActiveTintColor: '#F6C324',
+        tabBarInactiveTintColor: 'black',
+        tabBarStyle: { display: 'flex', backgroundColor: '#8AE2E0', borderRadius: 5, height: 60, padding: 5, margin: 5, },
         tabBarIcon: ({ focused, color, size }) => {
           // You can customize the icon based on the route name
           let iconName;

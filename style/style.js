@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import * as c from  './const.js';
 
 export const styles = StyleSheet.create({
   searchContainer: {
@@ -18,7 +19,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
     width: "95%",
-    backgroundColor: "#8AE2E0",
+    backgroundColor: c.PRIMARY_COLOR,
     borderRadius: 15,
     alignItems: "center",
     marginBottom: 0
@@ -27,7 +28,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
     width: "80%",
-    backgroundColor: "#6AF2F0",
+    backgroundColor: c.TERTIARY_COLOR,
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "space-evenly",
@@ -38,7 +39,7 @@ export const styles = StyleSheet.create({
     width: "90%",
   },
   inputView: {
-    backgroundColor: "#6AF2F0",
+    backgroundColor: c.TERTIARY_COLOR,
     borderRadius: 30,
     width: "70%",
     height: 45,
@@ -55,14 +56,14 @@ export const styles = StyleSheet.create({
     color: "black"
   },
   buttonContainer: {
-      height: 45,
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      marginBottom: 20,
-      width: "70%",
-      borderRadius: 30,
-      color: "#00000",
+    height: 45,
+    backgroundColor: c.PRIMARY_COLOR,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "70%",
+    borderRadius: 30,
+    padding: 5,
+    color: c.PRIMARY_TEXT_COLOR,
   },
   container: {
     flex: 1,
@@ -78,22 +79,41 @@ export const styles = StyleSheet.create({
     padding: 20,
   },
   container_1: {
-
     //flex: 1, // Set flex to evenly distribute child elements
     padding: 20,
     alignItems: 'center',
     justifyContent: 'space-evenly', // Use space-evenly to evenly space child elements
-    backgroundColor: '#8AE2E0',
+    backgroundColor: c.PRIMARY_COLOR,
     borderRadius: 32,
-    marginBottom: '15%', // Add margin to create space between consecutive container_1 objects
+    margin: '5%', // Add margin to create space between consecutive container_1 objects
   },
   container_2: {
+    margin: 10,
     flexDirection: 'row', // Use flexDirection: 'row' to align items horizontally
     borderRadius: 20,
     padding: 5,
     width: '100%',
     justifyContent: 'space-evenly', // Use space-evenly to evenly space child elements
     alignItems: 'center', // Align items in the center vertically
+    backgroundColor: '#8AE2E0',
+
+  },
+  profilePicture: {
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    marginBottom: 20,
+  },
+  container_3: {
+    //flex: 1, // Set flex to evenly distribute child elements
+    flexDirection: 'row', // Use flexDirection: 'row' to align items horizontally
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'space-evenly', // Use space-evenly to evenly space child elements
+    backgroundColor: c.PRIMARY_COLOR,
+    borderRadius: 5,
+    marginBottom: '15%', // Add margin to create space between consecutive container_1 objects
+    width: '100%',
   },
   heading: {
     fontSize: 24,
@@ -103,9 +123,6 @@ export const styles = StyleSheet.create({
   paragraph: {
     fontSize: 16,
     textAlign: 'center',
-  },
-  buttonContainer: {
-    marginTop: 10,
   },
    
   heading: {
@@ -127,13 +144,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footerText: {
-    color: 'black',
+    color: c.PRIMARY_TEXT_COLOR,
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
   },
   footerButton: {
     backgroundColor: 'white',
