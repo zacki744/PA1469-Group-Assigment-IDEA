@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { styles } from './style/style.js'
 
+// Add a document to the 'users' collection
 const Tab = createBottomTabNavigator();
 
 export default function App() {

@@ -17,6 +17,7 @@
     "expo-barcode-scanner": "~12.5.3",
     "expo-cli": "^6.3.10",
     "expo-client": "^0.0.0",
+    "firebase": "^10.6.0",
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-camera": "^4.2.1",

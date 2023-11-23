@@ -1,79 +1,62 @@
 // Profile.js
 import { Text, View, TextInput, Image } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styles } from './../../style/style.js';
 import * as C from './../../style/const.js';
 import { CustomButton } from './../obj/Button.js';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Saved from './redirectables/Saved.js';
-import AccountDetails from './redirectables/accountDetails.js';
+import { LoggedIn } from './LoggedIn.js'; // Update this line
 
 
 const Tab = createBottomTabNavigator();
+import { app } from './../../firebaseConfig.js';
+import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
+const db = getFirestore(app);
+
+async function getUsers(db) {
+  const querySnapshot = await getDocs(collection(db, "User"));
+  return querySnapshot.docs.map(doc => doc.data());
+}
 
 export default function Profile() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await setUsers(getUsers(db));
+        console.log(users);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const handleLogin = () => {
     // Simulating a login action - replace this with your actual authentication logic
     // For demo purposes, if email and password are not empty, consider the user as logged in
     if (email !== '' && password !== '') {
-      setIsLoggedIn(true);
+      console.log(email + ' ' + password);
+      console.log(users._j);
+      for (const element of users._j) {
+        console.log(element);
+        if (element.Name === email && element.Password === password) {
+          setUser(element);
+          setIsLoggedIn(true);
+          return;
+        }
+      }
+      console.log('Incorrect email or password');
     }
   };
+  
 
-  const getImagePath = () => {
-    // Perform your image lookup logic here
-    // If lookup fails, return the default path
-    return require('./../../assets/default-profile-picture.jpg'); // Adjust the default path as needed
-  };
-
-  function LoggedIn() {
-    return (
-      <View style={styles.container_p}>
-        <View style={styles.container_3}>
-          <Image source={getImagePath()} style={styles.profilePicture} />
-          <Text style={styles.heading}>Stevo jobs</Text>
-        </View>
-        <View style={styles.container_1}>
-        <View style={styles.container_2}>
-          <CustomButton
-              title="My account"
-              onPress={() => {
-                // redirect to my account
-                navigation.navigate('AccountDetails')
-              }}
-            />
-          </View>
-          <View style={styles.container_2}>
-            <CustomButton
-              title="History"
-              onPress={() => {
-                // redirect to history
-                navigation.navigate('Saved')
-              }}
-            />
-          </View>
-          <View style={styles.container_2}>
-            <CustomButton
-              title="Logout"
-              onPress={() => {
-                // Simulating a logout action - replace this with your actual authentication logic
-                // For demo purposes, we will just set isLoggedIn state to false
-                setEmail('');
-                setPassword('');
-                setIsLoggedIn(false);
-              }}
-              style={{ backgroundColor: C.Y_PRIMARY }} // Custom button style
-            />
-          </View>
-        </View>
-      </View>
-    );
-  }
 
   if (!isLoggedIn) {
     return (
@@ -93,6 +76,11 @@ export default function Profile() {
       </View>
     );
   } else {
-    return <LoggedIn />;
+    return <LoggedIn 
+      user = {user} 
+      setIsLoggedIn = {setIsLoggedIn} 
+      setEmail ={setEmail} 
+      setPassword={setPassword}
+      />;
   }
 }

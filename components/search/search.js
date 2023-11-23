@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { TextInput, View, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { TextInput, View, Text } from "react-native";
 import { styles } from './../../style/style.js'
 import { Feather, Entypo } from "@expo/vector-icons";
 import { CustomButton } from './../obj/Button.js';
 import * as c from './../../style/const.js';
 
+
 export default function Search() {
-  const [state, setState] = useState({ search: '', clicked: false });
-  const { search, clicked } = state;
+  const [state, setState] = useState({ search: '', clicked: false});
+  const { search, clicked } = state;  
 
   const setClicked = (ifClicked) => {
     setState({ ...state, clicked: ifClicked });
