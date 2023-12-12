@@ -1,14 +1,11 @@
 // Profile.js
-import { Text, View, TextInput, Image } from 'react-native';
+import { View, TextInput } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { styles } from './../../style/style.js';
 import * as C from './../../style/const.js';
 import { CustomButton } from './../obj/Button.js';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LoggedIn } from './LoggedIn.js'; // Update this line
 
-
-const Tab = createBottomTabNavigator();
 import { app } from './../../firebaseConfig.js';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
@@ -25,6 +22,7 @@ export default function Profile() {
   const [password, setPassword] = useState('');
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
+
   useEffect(() => {
     const fetchData = async () => {
       try {

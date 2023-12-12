@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { styles } from './../../style/style.js';
 import * as C from './../../style/const.js';
 import { CustomButton } from './../obj/Button.js';
+import { History } from './History.js';
+import { MyAccount } from './MyAccount.js';
+
 
 const getImagePath = () => {
     // Perform your image lookup logic here
@@ -18,7 +21,19 @@ export function LoggedIn({ user, setIsLoggedIn, setEmail, setPassword }) {
       setPassword('');
       setIsLoggedIn(false);
     };
-    return (
+    const [redirectAbles, setredirectAbles] = useState(0);
+    if (redirectAbles === 1) {
+      return (
+        <MyAccount user={user} getImagePath={getImagePath} setredirectAbles={setredirectAbles} />
+      );
+    }
+    if (redirectAbles === 2) {
+      return (
+        <History user={user} getImagePath={getImagePath} setredirectAbles={setredirectAbles}/>
+      );
+    }
+    else {
+      return (
         <View style={styles.container_p}>
           <View style={styles.container_3}>
             <Image source={getImagePath()} style={styles.profilePicture} />
@@ -30,7 +45,7 @@ export function LoggedIn({ user, setIsLoggedIn, setEmail, setPassword }) {
                 title="My account"
                 onPress={() => {
                   // redirect to my account
-                  navigation.navigate('AccountDetails')
+                  setredirectAbles(1);
                 }}
               />
             </View>
@@ -39,7 +54,7 @@ export function LoggedIn({ user, setIsLoggedIn, setEmail, setPassword }) {
                 title="History"
                 onPress={() => {
                   // redirect to history
-                  navigation.navigate('Saved')
+                  setredirectAbles(2);
                 }}
               />
             </View>
@@ -57,4 +72,5 @@ export function LoggedIn({ user, setIsLoggedIn, setEmail, setPassword }) {
           </View>
         </View>
       );
+    }
 }
