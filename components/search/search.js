@@ -1,88 +1,91 @@
 import React, { useState, useEffect } from "react";
 import { TextInput, View, Text } from "react-native";
-import { styles } from "./../../style/style.js";
+import { styles } from './../../style/style.js'
 import { Feather, Entypo } from "@expo/vector-icons";
-import { CustomButton } from "./../obj/Button.js";
-import * as c from "./../../style/const.js";
-import { collection, getDocs } from "firebase/firestore/lite";
-
-
-async function getManuals(db) {
-  const querySnapshot = await getDocs(collection(db, "Manuals"));
-  return querySnapshot.docs.map((doc) => doc.data());
-}
+import { CustomButton } from './../obj/Button.js';
+import * as c from './../../style/const.js';
+import { ProduktView } from './../produktView/produktView.js';
+import PDFView from './../produktView/PDFView.js';
 
 export default function Search() {
-  const [state, setState] = useState({
-    search: "",
-    clicked: false,
-  });
+  const [state, setState] = useState({ search: '', clicked: false});
   const { search, clicked } = state;
-/*
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch data if needed
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
+  const [redirectAbles, setredirectAbles] = useState(0);
 
-    fetchData();
-  }, []);*/
 
   const setClicked = (ifClicked) => {
     setState({ ...state, clicked: ifClicked });
-  };
+  }
 
   const updateSearch = (search) => {
     setState({ ...state, search });
-  };
+  }
+  if (redirectAbles === 1) {
+    return (
+      <ProduktView produktID={search} setredirectAbles={setredirectAbles} />
+    );
+  } else if (redirectAbles === 2) {
+    return (
+      <PDFView produktID={search} setredirectAbles={setredirectAbles} />
+    );
+  } else {
+    return (
+      <View style={styles.container_p}>
+        <View style={styles.searchContainer}>
+          <View
+            style={
+              search !== ''
+                ? styles.searchBar__clicked
+                : styles.searchBar__unclicked
+            }
+          >
+            {/* search Icon */}
+            <Feather
+              name="search"
+              size={20}
+              color="black"
+              style={{ marginLeft: 1 }}
+            />
 
-  return (
-    <View style={styles.container_p}>
-        {/* search Icon */}
-        <Feather
-          name="search"
-          size={20}
-          color="black"
-          style={{ marginLeft: 1 }}
-        />
-
-        {/* Input field */}
-        <TextInput
-          style={styles.input}
-          placeholder="Search"
-          value={search}
-          onChangeText={updateSearch}
-          onFocus={() => {
-            setClicked(true);
-          }}
-        />
-        {/* cross Icon, depending on whether the search bar is clicked or not */}
+            {/* Input field */}
+            <TextInput
+              style={styles.input}
+              placeholder="Search"
+              value={search}
+              onChangeText={updateSearch}
+              onFocus={() => {
+                setClicked(true);
+              }}
+            />
+            {/* cross Icon, depending on whether the search bar is clicked or not */}
+            {clicked && (
+              <Entypo
+                name="cross"
+                size={20}
+                color="black"
+                style={{ padding: 3, marginLeft: -19 }}
+                onPress={() => {
+                  updateSearch("");
+                  setClicked(false);
+                }}
+              />
+            )}
+          </View>
+        </View>
+        {/* Search button, depending on whether the search bar is clicked or not */}
         {clicked && (
-          <Entypo
-            name="cross"
-            size={20}
-            color="black"
-            style={{ padding: 3, marginLeft: -19 }}
+          <CustomButton
+            title="Search"
             onPress={() => {
-              updateSearch("");
+              // Simulating a logout action - replace this with your actual authentication logic
+              // For demo purposes, we will just set isLoggedIn state to false
               setClicked(false);
+              setredirectAbles(1);
             }}
+            style={{ backgroundColor: c.Y_PRIMARY }} // Custom button style
           />
         )}
-      {clicked && (
-        <CustomButton
-          title="Search"
-          onPress={() => {
-            setClicked(false);
-            setPdfVisible(true);
-            loadPdf();
-          }}
-          style={{ backgroundColor: c.Y_PRIMARY }}
-        />
-      )}
-    </View>
-  );
+      </View>
+    );
+  }
 }
