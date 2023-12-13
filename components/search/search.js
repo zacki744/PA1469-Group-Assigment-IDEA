@@ -5,7 +5,7 @@ import { Feather, Entypo } from "@expo/vector-icons";
 import { CustomButton } from './../obj/Button.js';
 import * as c from './../../style/const.js';
 import { ProduktView } from './../produktView/produktView.js';
-import PDFView from './../produktView/PDFView.js';
+import PDF_View from './../produktView/PDFView.js';
 
 export default function Search() {
   const [state, setState] = useState({ search: '', clicked: false});
@@ -26,7 +26,7 @@ export default function Search() {
     );
   } else if (redirectAbles === 2) {
     return (
-      <PDFView produktID={search} setredirectAbles={setredirectAbles} />
+      <PDF_View produktID={search} setredirectAbles={setredirectAbles} />
     );
   } else {
     return (

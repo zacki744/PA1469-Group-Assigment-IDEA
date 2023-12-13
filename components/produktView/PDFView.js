@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
-import * as OpenAnything from 'react-native-openanything';
 import { storage } from './../../firebaseConfig.js';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { CustomButton } from './../obj/Button.js';
 import { styles } from './../../style/style.js';
+import PDFViewer from './pdf_view.js';
 
 function FileURLFind(produktID) {
   var pdf;
@@ -28,14 +28,14 @@ function FileURLFind(produktID) {
   return pdf;
 }
 
-export default function PDFView({ produktID, setredirectAbles }) {
+export default function PDF_View({ produktID, setredirectAbles }) {
   const pathReference = ref(storage, FileURLFind(produktID));
-  const [pdfUri, setPdfUri] = useState(null);
+  const [pdfUrl, setPdfUrl] = useState(null);
 
   const loadPdf = async () => {
     try {
-      const pdfUrl = await getDownloadURL(pathReference);
-      setPdfUri(pdfUrl);
+      const url = await getDownloadURL(pathReference);
+      setPdfUrl(url);
     } catch (error) {
       console.error("Error loading PDF:", error);
     }
@@ -45,28 +45,13 @@ export default function PDFView({ produktID, setredirectAbles }) {
     loadPdf();
   }, []);
 
-  const openPdf = () => {
-    if (pdfUri) {
-      OpenAnything.Pdf(pdfUri);
-    } else {
-      console.warn("PDF URI is not available yet");
-    }
-  };
-
   return (
-    <View style={{ flex: 1 }}>
-      {pdfUri ? (
-        <View>
-          <Text>PDFView</Text>
-          <CustomButton
-            title="Open PDF"
-            onPress={openPdf}
-          />
-        </View>
+    <View style={styles.container}>
+      {pdfUrl ? (
+        <PDFViewer pdfUrl={pdfUrl} />
       ) : (
         <Text>Loading PDF...</Text>
       )}
-
       <View style={styles.container_2}>
         <CustomButton
           title="Back"
