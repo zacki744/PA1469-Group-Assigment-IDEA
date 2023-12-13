@@ -9,17 +9,20 @@ import PDFViewer from './pdf_view.js';
 function FileURLFind(produktID) {
   var pdf;
   switch (produktID) {
-    case '1':
-      pdf = "manuals/vittsjoe-hylla-svartbrun-glas__AA-1388480-10-2.pdf";
+    case 'Bestå':
+      pdf = "gs://idea-5a667.appspot.com/manuals/IKEA_BESTA_Instructions_Manual___Manualzz.pdf";
       break;
-    case '2':
-      pdf = "manuals/vittsjoe-hylla-svartbrun-glas__AA-1388480-10-2.pdf";
+    case 'Älvdalen':
+      pdf = "gs://idea-5a667.appspot.com/manuals/aelvdalen-3-sits-baeddsoffa-knisa-moerkgra__AA-2361755-1-2.pdf";
       break;
-    case '3':
-      pdf = "manuals/vittsjoe-hylla-svartbrun-glas__AA-1388480-10-2.pdf";
+    case 'Alex':
+      pdf = "gs://idea-5a667.appspot.com/manuals/alex-skrivbord-vit__AA-2241984-6-2.pdf";
       break;
-    case '4':
-      pdf = "manuals/vittsjoe-hylla-svartbrun-glas__AA-1388480-10-2.pdf";
+    case 'Smussla':
+      pdf = "gs://idea-5a667.appspot.com/manuals/smussla-bedside-table-shelf-unit-white__AA-2230202-2-2.pdf";
+      break;
+    case 'Vittsjö':
+      pdf = "gs://idea-5a667.appspot.com/manuals/vittsjoe-hylla-svartbrun-glas__AA-1388480-10-2.pdf";
       break;
     default:
       pdf = "manuals/vittsjoe-hylla-svartbrun-glas__AA-1388480-10-2.pdf";
