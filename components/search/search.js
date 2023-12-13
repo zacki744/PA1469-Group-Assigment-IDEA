@@ -3,7 +3,6 @@ import { TextInput, View, Text, FlatList, TouchableOpacity } from "react-native"
 import { styles } from './../../style/style.js'
 import { Feather, Entypo } from "@expo/vector-icons";
 import { CustomButton } from './../obj/Button.js';
-import * as c from './../../style/const.js';
 import { ProduktView } from './../produktView/produktView.js';
 import PDF_View from './../produktView/PDFView.js';
 
@@ -64,6 +63,10 @@ export default function Search() {
             size={20}
             color="black"
             style={{ marginLeft: 1 }}
+            onPress={() => {
+              setredirectAbles(1);
+            }}
+            
           />
 
           {/* Input field */}
