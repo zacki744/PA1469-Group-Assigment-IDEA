@@ -13,14 +13,7 @@ const getImagePath = () => {
     return require('./../../assets/default-profile-picture.jpg'); // Adjust the default path as needed
   };
 
-export function LoggedIn({ user, setIsLoggedIn, setEmail, setPassword }) {
-    const handleLogout = () => {
-      // Handle logout action
-      // For demo purposes, we will just set isLoggedIn state to false
-      setEmail('');
-      setPassword('');
-      setIsLoggedIn(false);
-    };
+export function LoggedIn({ user, handleLogout }) {
     const [redirectAbles, setredirectAbles] = useState(0);
     if (redirectAbles === 1) {
       return (

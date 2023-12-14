@@ -91,6 +91,9 @@ export default function Profile() {
       </View>
     );
   } else {
-    return <LoggedIn user={user} handleLogout={handleLogout} />;
+    return <LoggedIn 
+      user={user} 
+      handleLogout={handleLogout} 
+      />;
   }
 }
