@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 import React from 'react';
-import { styles } from '../../style/style.js';
-import { CustomButton } from '../obj/Button.js';
+import { styles } from '../../../style/style.js';
+import { CustomButton } from '../../obj/Button.js';
 
 export function MyAccount({user, getImagePath, setredirectAbles}) {
     return (

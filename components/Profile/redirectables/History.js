@@ -1,7 +1,7 @@
 import { Text, View, Image } from 'react-native';
 import React, { useState } from 'react';
-import { styles } from '../../style/style.js';
-import { CustomButton } from '../obj/Button.js';
+import { styles } from '../../../style/style.js';
+import { CustomButton } from '../../obj/Button.js';
 
 export function History({user, getImagePath, setredirectAbles}) {
     return (

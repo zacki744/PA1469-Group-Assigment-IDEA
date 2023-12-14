@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { styles } from './../../style/style.js';
 import * as C from './../../style/const.js';
 import { CustomButton } from './../obj/Button.js';
-import { History } from './History.js';
-import { MyAccount } from './MyAccount.js';
+import { History } from './redirectables/History.js';
+import { MyAccount } from './redirectables/MyAccount.js';
 
 
 const getImagePath = () => {

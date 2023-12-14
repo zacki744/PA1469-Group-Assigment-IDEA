@@ -31,6 +31,7 @@ export default function QrScanner() {
     for (const obj of avalibleFurniture) 
     {
       if (obj === data) {
+        setScandata()
         setFurniture(data)
         setredirectAbles(1);
       }
