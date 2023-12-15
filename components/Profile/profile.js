@@ -28,7 +28,9 @@ export default function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await setUsers(getUsers(db));
+        const fetchedUsers = await getUsers(db);
+        setUsers(fetchedUsers);
+  
         const storedUser = await AsyncStorage.getItem('user');
         if (storedUser) {
           setUser(JSON.parse(storedUser));
@@ -38,9 +40,11 @@ export default function Profile() {
         console.error('Error fetching users:', error);
       }
     };
-
+  
     fetchData();
   }, []);
+  
+  
 
   function createAccount() {
     console.log('create account');
@@ -49,7 +53,8 @@ export default function Profile() {
 
   const handleLogin = () => {
     if (email !== '' && password !== '') {
-      for (const element of users._j) {
+      for (const element of users) {
+        console.log(element);
         if (element.Name === email && element.Password === password) {
           AsyncStorage.setItem('user', JSON.stringify(element));
           setUser(element);
@@ -60,6 +65,7 @@ export default function Profile() {
       console.log('Incorrect email or password');
     }
   };
+  
 
   const handleLogout = () => {
     AsyncStorage.removeItem('user');
@@ -69,7 +75,7 @@ export default function Profile() {
   };
 
   if (CreatingAccount === 1) {
-    return <CreatingAcc setCreatingAccount={setCreatingAccount} db={db} />;
+    return <CreatingAcc setCreatingAccount={setCreatingAccount} db={db}  setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>;
   }
 
   if (!isLoggedIn) {

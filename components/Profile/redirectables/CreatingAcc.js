@@ -18,7 +18,7 @@ async function createUser(name, email, password, db) {
   }
   
 
-export default function CreatingAcc({ setCreatingAccount, db }) {
+export default function CreatingAcc({ setCreatingAccount, db, setUser, setIsLoggedIn}) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,25 +26,26 @@ export default function CreatingAcc({ setCreatingAccount, db }) {
   const [error, setError] = useState('');
 
   const handleCreateAccount = async () => {
-  // Check if password and repeat password match
-  if (password !== repeatPassword) {
-    setError('Passwords do not match');
-    return;
-  }
-
-  // Call function to create user in the database
-  try {
-    await createUser(name, email, password, db);
-    // Reset fields and navigate back
-    setName('');
-    setEmail('');
-    setPassword('');
-    setRepeatPassword('');
-    setCreatingAccount(0);
-  } catch (error) {
-    setError('Error creating account');
-    console.error('Error creating account:', error);
-  }
+    // Check if password and repeat password match
+    if (password !== repeatPassword) {
+        setError('Passwords do not match');
+        return;
+    }
+    // Call function to create user in the database
+    try {
+        await createUser(name, email, password, db);
+        // Reset fields and navigate back
+        setUser({"Name": name, "Password": password})
+        setName('');
+        setEmail('');
+        setPassword('');
+        setRepeatPassword('');
+        setIsLoggedIn(true);
+        setCreatingAccount(0);
+    } catch (error) {
+        setError('Error creating account');
+        console.error('Error creating account:', error);
+    }
 };
 
   return (
