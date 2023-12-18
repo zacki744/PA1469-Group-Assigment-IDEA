@@ -3,7 +3,8 @@ import { Button, Linking } from 'react-native';
 
 const PDFViewer = ({ pdfUrl }) => {
   const handlePress = async () => {
-    const supported = await Linking.canOpenURL(pdfUrl);
+    console.log(pdfUrl)
+    //const supported = await Linking.canOpenURL(pdfUrl);
     if (supported) {
       await Linking.openURL(pdfUrl);
     } else {

@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "^1.21.0",
+    "@react-native-firebase/auth": "^18.7.3",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
@@ -22,6 +23,7 @@
     "expo-client": "^0.0.0",
     "expo-document-picker": "~11.5.4",
     "expo-file-system": "~15.4.5",
+    "expo-image-manipulator": "^11.5.0",
     "expo-sharing": "^11.7.0",
     "firebase": "^10.6.0",
     "react": "18.2.0",
@@ -33,7 +35,7 @@
     "react-native-permissions": "^3.10.1",
     "react-native-qrcode-scanner": "^1.5.5",
     "react-native-view-pdf": "^0.14.0",
-    "react-native-webview": "^13.6.3"
+    "react-native-webview": "13.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
