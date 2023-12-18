@@ -1,24 +1,41 @@
-// CreatingAcc.js
 import React, { useState } from 'react';
 import { View, TextInput, Text } from 'react-native';
 import { styles } from '../../../style/style.js';
 import * as c from '../../../style/const.js';
 import { CustomButton } from '../../obj/Button.js';
-import { collection, addDoc } from 'firebase/firestore/lite';
+import { collection, addDoc, getFirestore } from 'firebase/firestore/lite';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import app from './../../../firebaseConfig.js';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-async function createUser(name, email, password, db) {
-    // Add logic to create a new user entry in the database
-    const userCollection = collection(db, 'User');
-    await addDoc(userCollection, {
-      Email: email,
-      Name: name,
-      Password: password,
-    });
+async function createUserInFirestore(name, email, uid) {
+  const userCollection = collection(db, 'User');
+  await addDoc(userCollection, {
+    Name: name,
+    Email: email,
+    UID: uid, // Assuming UID is a unique identifier for the user
+  });
+}
+
+async function createUser(name, email, password, auth) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    console.log('User created!', userCredential.user);
+
+    // Write user details to Firestore
+    await createUserInFirestore(name, email, userCredential.user.uid);
+
+    return userCredential.user;
+  } catch (error) {
+    console.error('Error creating user:', error);
+    throw error;
   }
-  
+}
 
-export default function CreatingAcc({ setCreatingAccount, db, setUser, setIsLoggedIn}) {
+export default function CreatingAcc({ setCreatingAccount, setUser, setIsLoggedIn }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,25 +45,36 @@ export default function CreatingAcc({ setCreatingAccount, db, setUser, setIsLogg
   const handleCreateAccount = async () => {
     // Check if password and repeat password match
     if (password !== repeatPassword) {
-        setError('Passwords do not match');
-        return;
+      setError('Passwords do not match');
+      return; // Return early
     }
-    // Call function to create user in the database
+
+    // Call function to create user in Firebase Authentication
     try {
-        await createUser(name, email, password, db);
-        // Reset fields and navigate back
-        setUser({"Name": name, "Password": password})
-        setName('');
-        setEmail('');
-        setPassword('');
-        setRepeatPassword('');
-        setIsLoggedIn(true);
-        setCreatingAccount(0);
+      const user = await createUser(name, email, password, auth);
+
+      // Reset fields and navigate back
+      setUser({ Name: name, Password: password });
+      setName('');
+      setEmail('');
+      setPassword('');
+      setRepeatPassword('');
+      setIsLoggedIn(true);
+      setCreatingAccount(0);
     } catch (error) {
-        setError('Error creating account');
-        console.error('Error creating account:', error);
+      if (error.code === 'auth/email-already-in-use') {
+        setError('Email address is already in use.');
+      } else if (error.code === 'auth/invalid-email') {
+        setError('Invalid email address.');
+      } else if (error.code === 'auth/weak-password') {
+        setError('Password is too weak.');
+      } else {
+        setError('Error creating account. Please try again.');
+      }
+
+      console.error('Error creating account:', error);
     }
-};
+  };
 
   return (
     <View style={styles.container_p}>
@@ -76,7 +104,7 @@ export default function CreatingAcc({ setCreatingAccount, db, setUser, setIsLogg
           secureTextEntry={true}
           value={password}
           onChangeText={(text) => setPassword(text)}
-        />
+      />
       </View>
       <View style={styles.inputView}>
         <TextInput
@@ -97,6 +125,10 @@ export default function CreatingAcc({ setCreatingAccount, db, setUser, setIsLogg
         title="Back"
         onPress={() => {
           // redirect to login
+          setName('');
+          setEmail('');
+          setPassword('');
+          setRepeatPassword('');
           setCreatingAccount(0);
         }}
       />

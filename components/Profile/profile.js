@@ -5,12 +5,12 @@ import * as C from './../../style/const.js';
 import { CustomButton } from './../obj/Button.js';
 import { LoggedIn } from './LoggedIn.js';
 import CreatingAcc from './redirectables/CreatingAcc.js';
-import { app } from './../../firebaseConfig.js';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { app, db } from './../../firebaseConfig.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { collection, getDocs, query, where } from 'firebase/firestore/lite';
 
-
-const db = getFirestore(app);
+const auth = getAuth(app);
 
 async function getUsers(db) {
   const querySnapshot = await getDocs(collection(db, 'User'));
@@ -30,7 +30,7 @@ export default function Profile() {
       try {
         const fetchedUsers = await getUsers(db);
         setUsers(fetchedUsers);
-  
+
         const storedUser = await AsyncStorage.getItem('user');
         if (storedUser) {
           setUser(JSON.parse(storedUser));
@@ -40,42 +40,68 @@ export default function Profile() {
         console.error('Error fetching users:', error);
       }
     };
-  
+
+    // Check if the user is already logged in
+    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+      if (authUser) {
+        setIsLoggedIn(true);
+
+        // Fetch user details from Firestore
+        const userQuery = query(collection(db, 'User'), where('UID', '==', authUser.uid));
+        const querySnapshot = await getDocs(userQuery);
+        const userData = querySnapshot.docs.map((doc) => doc.data())[0];
+        setUser(userData);
+      }
+    });
+
     fetchData();
+
+    return () => unsubscribe(); // Cleanup the auth state listener
   }, []);
-  
-  
 
   function createAccount() {
     console.log('create account');
     setCreatingAccount(1);
   }
 
-  const handleLogin = () => {
-    if (email !== '' && password !== '') {
-      for (const element of users) {
-        console.log(element);
-        if (element.Name === email && element.Password === password) {
-          AsyncStorage.setItem('user', JSON.stringify(element));
-          setUser(element);
-          setIsLoggedIn(true);
-          return;
-        }
-      }
+  const handleLogin = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const loggedInUser = userCredential.user;
+
+      // Fetch user details from Firestore
+      const userQuery = query(collection(db, 'User'), where('UID', '==', loggedInUser.uid));
+      const querySnapshot = await getDocs(userQuery);
+      const userData = querySnapshot.docs.map((doc) => doc.data())[0];
+
+      // Save user and details to AsyncStorage
+      AsyncStorage.setItem('user', JSON.stringify(userData));
+
+      setUser(userData);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error('Error logging in:', error);
       console.log('Incorrect email or password');
     }
   };
-  
 
-  const handleLogout = () => {
-    AsyncStorage.removeItem('user');
-    setIsLoggedIn(false);
-    setEmail('');
-    setPassword('');
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+
+      // Remove user from AsyncStorage
+      AsyncStorage.removeItem('user');
+
+      setIsLoggedIn(false);
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   if (CreatingAccount === 1) {
-    return <CreatingAcc setCreatingAccount={setCreatingAccount} db={db}  setUser={setUser} setIsLoggedIn={setIsLoggedIn}/>;
+    return <CreatingAcc setCreatingAccount={setCreatingAccount} db={db} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />;
   }
 
   if (!isLoggedIn) {
@@ -97,9 +123,6 @@ export default function Profile() {
       </View>
     );
   } else {
-    return <LoggedIn 
-      user={user} 
-      handleLogout={handleLogout} 
-      />;
+    return <LoggedIn user={user} handleLogout={handleLogout} />;
   }
 }
