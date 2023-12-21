@@ -3,21 +3,15 @@ import { TextInput, View, Text, FlatList, TouchableOpacity } from "react-native"
 import { styles } from './../../style/style.js'
 import { Feather, Entypo } from "@expo/vector-icons";
 import { CustomButton } from './../obj/Button.js';
-import { ProduktView } from './../produktView/produktView.js';
-import PDF_View from './../produktView/PDFView.js';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function Search() {
   const [state, setState] = useState({ search: '', clicked: false });
   const { search, clicked } = state;
-  const [redirectAbles, setredirectAbles] = useState(0);
-  const avalibleFurniture = [
-    'Bestå',
-    'Älvdalen',
-    'Alex',
-    'Smussla',
-    'Vittsjö'
-  ];
+  const avalibleFurniture = ['Bestå', 'Älvdalen', 'Alex', 'Smussla', 'Vittsjö'];
   const [filteredFurniture, setFilteredFurniture] = useState(avalibleFurniture);
+  const navigation = useNavigation(); // Get navigation object
 
   const setClicked = (ifClicked) => {
     setState({ ...state, clicked: ifClicked });
@@ -34,19 +28,10 @@ export default function Search() {
   const handleFurnitureClick = (furniture) => {
     setClicked(false);
     updateSearch(furniture);
-    setredirectAbles(1); // Assuming you want to redirect to ProduktView
-    // You can also add logic to handle PDF_View redirection based on the selected furniture
-  }
-
-  if (redirectAbles === 1) {
-    return (
-      <ProduktView produktID={search} setredirectAbles={setredirectAbles} />
-    );
-  } else if (redirectAbles === 2) {
-    return (
-      <PDF_View produktID={search} setredirectAbles={setredirectAbles} />
-    );
-  } else {
+    // Navigate to ProduktView with the selected furniture
+    navigation.navigate('ProduktViewSearch', { produktID: furniture });
+  };
+  
     return (
     <View style={styles.container_p}>
       <View style={styles.searchContainer}>
@@ -63,9 +48,7 @@ export default function Search() {
             size={20}
             color="black"
             style={{ marginLeft: 1 }}
-            onPress={() => {
-              setredirectAbles(1);
-            }}
+            onPress={() => handleFurnitureClick(search)}
             
           />
 
@@ -108,5 +91,4 @@ export default function Search() {
       )}
     </View>
   );
-  };
 }

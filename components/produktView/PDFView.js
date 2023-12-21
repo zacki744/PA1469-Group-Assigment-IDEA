@@ -3,11 +3,14 @@ import { View, Text, Button, ActivityIndicator, TouchableOpacity, Image, StyleSh
 import { storage } from './../../firebaseConfig.js';
 import { CustomButton } from './../obj/Button.js';
 //import { styles } from './../../style/style.js';
+import { WebView } from 'react-native-webview';
 import { ref, getDownloadURL, listAll } from 'firebase/storage';
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 
 
+ 
 function FileURLFind(produktID) {
   var pdf;
   switch (produktID) {
@@ -33,7 +36,8 @@ function FileURLFind(produktID) {
   return pdf;
 }
 
-export default function PDF_View({ produktID, setredirectAbles }) {
+export default function PDF_View({ route }) {
+  const { produktID } = route.params;
   const folderReference = ref(storage, FileURLFind(produktID));
   const [imageUris, setImageUris] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -57,6 +61,7 @@ export default function PDF_View({ produktID, setredirectAbles }) {
       console.error('Error loading images:', error);
     }
   };
+  const navigation = useNavigation();
 
   useEffect(() => {
     loadImages();
@@ -81,7 +86,7 @@ export default function PDF_View({ produktID, setredirectAbles }) {
       ) : imageUris.length > 0 ? (
         <>
           <Text style={styles.count}>{`Page ${currentImageIndex + 1} of ${imageUris.length}`}</Text>
-          <Image
+          <WebView
             style={styles.webView}
             source={{ uri: imageUris[currentImageIndex] }}
           />
@@ -95,22 +100,18 @@ export default function PDF_View({ produktID, setredirectAbles }) {
           </View>
         </>
       ) : (
+        <>
         <Text>No images found</Text>
+        </>
       )}
-      <View style={styles.button}>
-        <CustomButton style={{alignContent: 'center'}}
-          title="Back"
-          onPress={() => {
-            // redirect to my account
-            setredirectAbles(0);
-          }}
-        />
-      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  button_container: {
+    allignContent: 'center',
+  },
   button: {
     backgroundColor: 'white',
     alignItems: 'center'

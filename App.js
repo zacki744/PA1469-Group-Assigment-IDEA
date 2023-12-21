@@ -1,19 +1,36 @@
-import { View } from 'react-native';
-import MyTabs from './components/footer/botom-tab.js'
+// Import necessary dependencies
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { styles } from './style/style.js'
+import { createStackNavigator } from '@react-navigation/stack';
+import MyTabs from './components/footer/botom-tab.js';
 
-// Add a document to the 'users' collection
-const Tab = createBottomTabNavigator();
+// Create a stack navigator
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.bottomTab}>
     <NavigationContainer>
-      <MyTabs />
+      <Stack.Navigator
+        initialRouteName="MyTabs"
+        screenOptions={{
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#8AE2E0',
+            height: 60,
+            elevation: 0, // Remove shadow on Android
+          },
+          headerTintColor: 'black',
+          headerTitleStyle: {
+            fontSize: 20,
+          },
+        }}
+      >
+        <Stack.Screen
+          name="MyTabs"
+          component={MyTabs}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
-    </View>
-
   );
 }

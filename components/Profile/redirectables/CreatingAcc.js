@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text } from 'react-native';
 import { styles } from '../../../style/style.js';
-import * as c from '../../../style/const.js';
 import { CustomButton } from '../../obj/Button.js';
 import { collection, addDoc, getFirestore } from 'firebase/firestore/lite';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import app from './../../../firebaseConfig.js';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 const auth = getAuth(app);
 const db = getFirestore(app);
