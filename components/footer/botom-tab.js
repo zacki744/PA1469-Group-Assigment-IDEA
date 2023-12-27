@@ -8,6 +8,10 @@ import QrScanner from './../qrScanner/QrScanner.js';
 import ProduktView from './../produktView/produktView.js';
 import PDF_View from './../produktView/PDFView.js';
 import { Ionicons } from '@expo/vector-icons';
+import CreatingAcc from '../Profile/redirectables/CreatingAcc.js';
+import { MyAccount } from '../Profile/redirectables/MyAccount.js';
+import { History } from '../Profile/redirectables/History.js';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -19,7 +23,8 @@ function SearchStack() {
         name="SearchMain" // Rename to avoid conflicts
         component={Search}
         options={{
-          headerShown: false,
+          headerShown: true,
+          title: 'Search'
         }}
       />
       <Stack.Screen
@@ -41,6 +46,79 @@ function SearchStack() {
     </Stack.Navigator>
   );
 }
+
+function QrStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="QrMain" // Rename to avoid conflicts
+        component={QrScanner}
+        options={{
+          headerShown: true,
+          title: 'QR Scanner',
+        }}
+      />
+      <Stack.Screen
+        name="ProduktViewQr" // Rename to avoid conflicts
+        component={ProduktView}
+        options={{
+          headerShown: true,
+          title: 'Details',
+        }}
+      />
+      <Stack.Screen
+        name="PDF_ViewSearch" // Rename to avoid conflicts
+        component={PDF_View}
+        options={{
+          headerShown: true,
+          title: 'PDF View',
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+// stack for profile
+function ProfileStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ProfileMain" // Rename to avoid conflicts
+        component={Profile}
+        options={{
+          headerShown: true,
+          title: 'Profile',
+        }}
+      />
+      <Stack.Screen
+        name="CreateProfile" // Rename to avoid conflicts
+        component={CreatingAcc}
+        options={{
+          headerShown: true,
+          title: 'Create Profile',
+        }}
+      />
+      <Stack.Screen
+        name="History" // Rename to avoid conflicts
+        component={History}
+        options={{
+          headerShown: true,
+          title: 'History',
+        }}
+      />
+      <Stack.Screen
+        name="Settings" // Rename to avoid conflicts
+        component={MyAccount}
+        options={{
+          headerShown: true,
+          title: 'Settings',
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+
 
 export default function MyTabs() {
   return (
@@ -72,8 +150,8 @@ export default function MyTabs() {
       })}
     >
       <Tab.Screen name="Search" component={SearchStack} options={{ headerShown: false }} />
-      <Tab.Screen name="qrScanner" component={QrScanner} />
-      <Tab.Screen name="profile" component={Profile} />
+      <Tab.Screen name="qrScanner" component={QrStack} options={{ headerShown: false }} />
+      <Tab.Screen name="profile" component={ProfileStack} options={{ headerShown: false }}/>
     </Tab.Navigator>
   );
 }

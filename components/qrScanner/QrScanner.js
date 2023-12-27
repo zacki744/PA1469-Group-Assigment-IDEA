@@ -9,37 +9,46 @@ import { useNavigation, useIsFocused } from '@react-navigation/native';
 export default function QrScanner() {
   const [hasPermission, setHasPermission] = useState(false);
   const [furniture, setFurniture] = useState(false);
-  const [initialState, setInitialState] = useState(null);
-  const navigation = useNavigation(); // Get navigation object
+  const navigation = useNavigation();
+  const isFocused = useIsFocused(true);
 
   const avaliableFurniture = ['Bestå', 'Älvdalen', 'Alex', 'Smussla', 'Vittsjö'];
-
+  const handleScanAgain = () => {
+    // Reset the stack and navigate to 'qrScanner'
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'qrScanner' }],
+    });
+    setFurniture(false);
+  };
   useEffect(() => {
-    (async () => {
+    const checkPermission = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
+      console.log('Camera permission status:', status);
       setHasPermission(status === 'granted');
-    })();
-    const initialNavigationState = navigation.getState();
-    setInitialState(initialNavigationState);
-  }, [navigation]);
+    };
+  
+    checkPermission();
+  
+    if (isFocused) {
+      // Additional logic when the screen is focused
+      console.log('Screen is focused');
+    } else {
+      //handleScanAgain();
+    }
+  }, [isFocused]);
+  
+
 
   const handleBarCodeScanned = ({ data }) => {
+    console.log('Scanned QR code:', data);
     for (const obj of avaliableFurniture) {
       if (obj === data) {
         setFurniture(true);
-        navigation.navigate('ProduktViewSearch', { produktID: data });
+        navigation.navigate('ProduktViewQr', { ProductName: data });
       }
     }
-  };
-  const handleScanAgain = () => {
-    // Reset the entire stack and navigate to 'QrScanner'
-    console.log(initialState);
-    navigation.reset({
-      ...initialState
-    });
-    setFurniture(false);
-    navigation.navigate('qrScanner');
-  };
+  }; 
 
   if (!hasPermission) {
     return (

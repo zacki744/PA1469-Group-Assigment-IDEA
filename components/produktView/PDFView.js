@@ -1,44 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, ActivityIndicator, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
 import { storage } from './../../firebaseConfig.js';
-import { CustomButton } from './../obj/Button.js';
-//import { styles } from './../../style/style.js';
 import { WebView } from 'react-native-webview';
 import { ref, getDownloadURL, listAll } from 'firebase/storage';
 import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 
 
 
  
-function FileURLFind(produktID) {
-  var pdf;
-  switch (produktID) {
+function FileURLFind(ProductName) {
+  var FolderPath = '';
+  switch (ProductName) {
     case 'Bestå':
-      pdf = "gs://idea-5a667.appspot.com/manuals/IKEA_BESTA_Instructions_Manual___Manualzz";
+      FolderPath = "gs://idea-5a667.appspot.com/manuals/IKEA_BESTA_Instructions_Manual___Manualzz";
       break;
     case 'Älvdalen':
-      pdf = "gs://idea-5a667.appspot.com/manuals/aelvdalen-3-sits-baeddsoffa-knisa-moerkgra__AA-2361755-1-2";
+      FolderPath = "gs://idea-5a667.appspot.com/manuals/aelvdalen-3-sits-baeddsoffa-knisa-moerkgra__AA-2361755-1-2";
       break;
     case 'Alex':
-      pdf = "gs://idea-5a667.appspot.com/manuals/alex-skrivbord-vit__AA-2241984-6-2.pdf";
+      FolderPath = "gs://idea-5a667.appspot.com/manuals/alex-skrivbord-vit__AA-2241984-6-2";
       break;
     case 'Smussla':
-      pdf = "gs://idea-5a667.appspot.com/manuals/smussla-bedside-table-shelf-unit-white__AA-2230202-2-2";
+      FolderPath = "gs://idea-5a667.appspot.com/manuals/smussla-bedside-table-shelf-unit-white__AA-2230202-2-2";
       break;
     case 'Vittsjö':
-      pdf = "gs://idea-5a667.appspot.com/manuals/vittsjoe-hylla-svartbrun-glas__AA-1388480-10-2";
+      FolderPath = "gs://idea-5a667.appspot.com/manuals/vittsjoe-hylla-svartbrun-glas__AA-1388480-10-2";
       break;
     default:
-      pdf = "manuals/vittsjoe-hylla-svartbrun-glas__AA-1388480-10-2";
+      FolderPath = "";
       break;
   }
-  return pdf;
+  return FolderPath;
 }
 
 export default function PDF_View({ route }) {
-  const { produktID } = route.params;
-  const folderReference = ref(storage, FileURLFind(produktID));
+  const { ProductName } = route.params;
+  const folderReference = ref(storage, FileURLFind(ProductName));
   const [imageUris, setImageUris] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -61,8 +58,6 @@ export default function PDF_View({ route }) {
       console.error('Error loading images:', error);
     }
   };
-  const navigation = useNavigation();
-
   useEffect(() => {
     loadImages();
   }, []);
@@ -101,7 +96,7 @@ export default function PDF_View({ route }) {
         </>
       ) : (
         <>
-        <Text>No images found</Text>
+        <Text>{`No images found for ${ProductName}`}</Text>
         </>
       )}
     </View>

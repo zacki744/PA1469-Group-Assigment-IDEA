@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { TextInput, View, Text, FlatList, TouchableOpacity } from "react-native";
 import { styles } from './../../style/style.js'
 import { Feather, Entypo } from "@expo/vector-icons";
-import { CustomButton } from './../obj/Button.js';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -29,7 +28,7 @@ export default function Search() {
     setClicked(false);
     updateSearch(furniture);
     // Navigate to ProduktView with the selected furniture
-    navigation.navigate('ProduktViewSearch', { produktID: furniture });
+    navigation.navigate('ProduktViewSearch', { ProductName: furniture });
   };
   
     return (
