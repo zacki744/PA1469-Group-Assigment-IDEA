@@ -5,17 +5,10 @@ import * as C from './../../style/const.js';
 import { CustomButton } from './../obj/Button.js';
 import { LoggedIn } from './LoggedIn.js';
 import CreatingAcc from './redirectables/CreatingAcc.js';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { app, db } from './../../firebaseConfig.js';
+import { db, auth } from './../../firebaseConfig.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, getDocs, query, where } from 'firebase/firestore/lite';
-
-const auth = getAuth(app);
-
-async function getUsers(db) {
-  const querySnapshot = await getDocs(collection(db, 'User'));
-  return querySnapshot.docs.map((doc) => doc.data());
-}
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'; // Remove initializeAuth from here
 
 export default function Profile() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,34 +21,39 @@ export default function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedUsers = await getUsers(db);
-        setUsers(fetchedUsers);
-
         const storedUser = await AsyncStorage.getItem('user');
         if (storedUser) {
           setUser(JSON.parse(storedUser));
           setIsLoggedIn(true);
         }
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error('Error fetching user from AsyncStorage:', error);
       }
     };
-
+  
     // Check if the user is already logged in
     const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
       if (authUser) {
         setIsLoggedIn(true);
-
-        // Fetch user details from Firestore
-        const userQuery = query(collection(db, 'User'), where('UID', '==', authUser.uid));
-        const querySnapshot = await getDocs(userQuery);
-        const userData = querySnapshot.docs.map((doc) => doc.data())[0];
-        setUser(userData);
+  
+        // Use getUser from Firebase Authentication to get user details
+        try {
+          const userQuery = query(collection(db, 'User'), where('UID', '==', authUser.uid));
+          const querySnapshot = await getDocs(userQuery);
+          const userData = querySnapshot.docs.map((doc) => doc.data())[0];
+  
+          // Save user and details to AsyncStorage
+          AsyncStorage.setItem('user', JSON.stringify(userData));
+  
+          setUser(userData);
+        } catch (error) {
+          console.error('Error fetching user details:', error);
+        }
       }
     });
-
+  
     fetchData();
-
+  
     return () => unsubscribe(); // Cleanup the auth state listener
   }, []);
 
