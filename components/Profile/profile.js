@@ -14,7 +14,6 @@ export default function Profile() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
   const [CreatingAccount, setCreatingAccount] = useState(0);
 
