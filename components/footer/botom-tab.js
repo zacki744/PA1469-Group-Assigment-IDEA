@@ -11,6 +11,8 @@ import { Ionicons } from '@expo/vector-icons';
 import CreatingAcc from '../Profile/redirectables/CreatingAcc.js';
 import { MyAccount } from '../Profile/redirectables/MyAccount.js';
 import { History } from '../Profile/redirectables/History.js';
+import { Support } from '../Support/Support.js';
+import { Receipt } from '../Support/Receipt.js';
 
 
 const Tab = createBottomTabNavigator();
@@ -43,6 +45,23 @@ function SearchStack() {
           title: 'PDF View',
         }}
       />
+      <Stack.Screen
+        name="Support" // Rename to avoid conflicts
+        component={Support}
+        options={{
+          headerShown: true,
+          title: 'Support',
+        }}
+      />
+      <Stack.Screen
+        name="Receipt" // Rename to avoid conflicts
+        component={Receipt}
+        options={{
+          headerShown: true,
+          title: 'Receipt',
+        }}
+      />
+
     </Stack.Navigator>
   );
 }
@@ -72,6 +91,22 @@ function QrStack() {
         options={{
           headerShown: true,
           title: 'PDF View',
+        }}
+      />
+      <Stack.Screen
+        name="Support" // Rename to avoid conflicts
+        component={Support}
+        options={{
+          headerShown: true,
+          title: 'Support',
+        }}
+      />
+      <Stack.Screen
+        name="Receipt" // Rename to avoid conflicts
+        component={Receipt}
+        options={{
+          headerShown: true,
+          title: 'Receipt',
         }}
       />
     </Stack.Navigator>

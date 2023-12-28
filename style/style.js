@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: c.WHITE_COLOR,
     padding: 10,
     borderRadius: 5,
     marginTop: 10,
@@ -22,7 +22,8 @@ export const styles = StyleSheet.create({
     backgroundColor: c.PRIMARY_COLOR,
     borderRadius: 15,
     alignItems: "center",
-    marginBottom: 0
+    marginBottom: 0,
+    marginTop: 0
   },
   searchBar__clicked: {
     padding: 10,
@@ -32,6 +33,7 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "space-evenly",
+    marginBottom: 0,
   },
   input: {
     fontSize: 20,
@@ -65,18 +67,75 @@ export const styles = StyleSheet.create({
     padding: 5,
     color: c.PRIMARY_TEXT_COLOR,
   },
+  buttonContainer_Y: {
+    height: 45,
+    backgroundColor: c.Y_PRIMARY,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "40  %",
+    borderRadius: 30,
+    padding: 5,
+    color: c.PRIMARY_TEXT_COLOR,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: c.WHITE_COLOR,
     padding: 20,
   },  
   container_p: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: c.WHITE_COLOR,
     padding: 20,
+  },
+  container_p: {
+    alignItems: 'center',
+    backgroundColor: c.WHITE_COLOR,
+    padding: 20,
+    marginBottom: 0,
+  },
+  container_w: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: c.WHITE_COLOR,
+    padding: 20,
+    marginBottom: 0,
+  },
+  container_wb: {
+    //flex: 1, // Set flex to evenly distribute child elements
+    flexDirection: 'row', // Use flexDirection: 'row' to align items horizontally
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'space-evenly', // Use space-evenly to evenly space child elements
+    backgroundColor: c.WHITE_COLOR,
+    borderRadius: 32,
+    marginBottom: '1%', // Add margin to create space between consecutive container_1 objects
+    width: '100%',
+    height: '15%'
+  },
+  container_b: {
+    //flex: 1, // Set flex to evenly distribute child elements
+    flexDirection: 'row', // Use flexDirection: 'row' to align items horizontally
+    padding: 10,
+    alignItems: 'left',
+    justifyContent: 'space-evenly', // Use space-evenly to evenly space child elements
+    backgroundColor: c.PRIMARY_COLOR,
+    borderRadius: 20,
+    marginBottom: '15%', // Add margin to create space between consecutive container_1 objects
+    width: '100%',
+  },
+  container_Y: {
+      margin: 10,
+      flexDirection: 'row', // Use flexDirection: 'row' to align items horizontally
+      borderRadius: 20,
+      padding: 5,
+      width: '50%',
+      justifyContent: 'space-evenly', // Use space-evenly to evenly space child elements
+      alignItems: 'center', // Align items in the center vertically
+      backgroundColor: '#F6C324',
+  
   },
   container_1: {
     //flex: 1, // Set flex to evenly distribute child elements
@@ -120,6 +179,13 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
+  tame_heading:{
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: c.PRIMARY_TEXT_COLOR,
+
+  },
   paragraph: {
     fontSize: 16,
     textAlign: 'center',
@@ -158,5 +224,10 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  searchImage: {
+    width: '100%',
+    height: '60%',
+    alignSelf: 'center',
+   
+  }
 });
-
