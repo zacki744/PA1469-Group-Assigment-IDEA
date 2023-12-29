@@ -149,6 +149,14 @@ function ProfileStack() {
           title: 'Settings',
         }}
       />
+      <Stack.Screen
+        name="PDF_ViewProfile" // Rename to avoid conflicts
+        component={PDF_View}
+        options={{
+          headerShown: true,
+          title: 'PDF View',
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -166,8 +174,9 @@ export default function MyTabs() {
           backgroundColor: '#8AE2E0',
           borderRadius: 5,
           height: 60,
-          padding: 5,
-          margin: 5,
+          paddingBottom: 10,
+          paddingTop: 10,
+          //margin: 5,
         },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;

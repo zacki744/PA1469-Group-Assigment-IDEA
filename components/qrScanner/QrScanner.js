@@ -5,10 +5,10 @@ import { Button } from '@rneui/themed';
 import { styles } from './../../style/style.js';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 
-
 export default function QrScanner() {
   const [hasPermission, setHasPermission] = useState(false);
   const [furniture, setFurniture] = useState(false);
+  const [isScanned, setIsScanned] = useState(false); // New state
   const navigation = useNavigation();
   const isFocused = useIsFocused(true);
 
@@ -20,32 +20,32 @@ export default function QrScanner() {
       routes: [{ name: 'qrScanner' }],
     });
     setFurniture(false);
+    setIsScanned(false); // Reset the state when scanning again
   };
+  
   useEffect(() => {
     const checkPermission = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
-      console.log('Camera permission status:', status);
       setHasPermission(status === 'granted');
     };
   
     checkPermission();
   
-    if (isFocused) {
-      // Additional logic when the screen is focused
-      console.log('Screen is focused');
-    } else {
-      //handleScanAgain();
+    if (isFocused && isScanned) {
+      // Additional logic when the screen is focused and the QR code is already scanned
+      console.log('Screen is focused, but QR code is already scanned');
     }
-  }, [isFocused]);
-  
-
+  }, [isFocused, isScanned]);
 
   const handleBarCodeScanned = ({ data }) => {
-    console.log('Scanned QR code:', data);
-    for (const obj of avaliableFurniture) {
-      if (obj === data) {
-        setFurniture(true);
-        navigation.navigate('ProduktViewQr', { ProductName: data });
+    if (!isScanned) { // Check if the QR code is already scanned
+      for (const obj of avaliableFurniture) {
+        if (obj === data) {
+          console.log('Found furniture:', data);
+          setFurniture(true);
+          navigation.navigate('ProduktViewQr', { ProductName: data });
+          return;
+        }
       }
     }
   }; 

@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from "react";
 import { TextInput, View, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import { styles } from './../../style/style.js'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather, Entypo } from "@expo/vector-icons";
 
 
@@ -25,6 +25,13 @@ export default function Search() {
     'Smussla': require('./../../assets/smussla_thumbnail-1.png'),
     'Vittsjö': require('./../../assets/VITTSJÖ_thumbnail-1.png')
   };
+  const furnitureID = {
+    'Bestå': '180.473.62',
+    'Älvdalen': '200.114.08',
+    'Alex': '302.130.76',
+    'Smussla': '404.539.24',
+    'Vittsjö': '502.146.78'
+  };
   const [filteredFurniture, setFilteredFurniture] = useState(furnitureImages);
 
 
@@ -34,7 +41,7 @@ export default function Search() {
 
   const updateSearch = (search) => {
     const filteredItems = Object.keys(furnitureImages).filter(item =>
-      item.toLowerCase().includes(search.toLowerCase())
+      item.toLowerCase().includes(search.toLowerCase()) || furnitureID[item].includes(search)
     );
     setState({ ...state, search });
     setFilteredFurniture(filteredItems);
@@ -69,7 +76,7 @@ export default function Search() {
               // Simulating a logout action - replace this with your actual authentication logic
               // For demo purposes, we will just set isLoggedIn state to false
               setClicked(false);
-              setredirectAbles(1);
+              handleFurnitureClick(search);
             }} 
             />
             )}
@@ -110,6 +117,7 @@ export default function Search() {
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handleFurnitureClick(item)}>
             <Image source={furnitureImages[item]} style={{width: 150, height: 200, margin: 10, marginTop: 20}} />
+            <Text style={{textAlign: 'center'}}>{furnitureID[item]}</Text>
           </TouchableOpacity>
         )}
       />

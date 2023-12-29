@@ -14,16 +14,31 @@ function FileURLFind(ProductName) {
     case 'Bestå':
       FolderPath = "gs://idea-5a667.appspot.com/manuals/IKEA_BESTA_Instructions_Manual___Manualzz";
       break;
+    case '180.473.62':
+      FolderPath = "gs://idea-5a667.appspot.com/manuals/IKEA_BESTA_Instructions_Manual___Manualzz";
+      break;
     case 'Älvdalen':
+      FolderPath = "gs://idea-5a667.appspot.com/manuals/aelvdalen-3-sits-baeddsoffa-knisa-moerkgra__AA-2361755-1-2";
+      break;
+    case '200.114.08':
       FolderPath = "gs://idea-5a667.appspot.com/manuals/aelvdalen-3-sits-baeddsoffa-knisa-moerkgra__AA-2361755-1-2";
       break;
     case 'Alex':
       FolderPath = "gs://idea-5a667.appspot.com/manuals/alex-skrivbord-vit__AA-2241984-6-2";
       break;
+    case '302.130.76':
+      FolderPath = "gs://idea-5a667.appspot.com/manuals/alex-skrivbord-vit__AA-2241984-6-2";
+      break;
     case 'Smussla':
       FolderPath = "gs://idea-5a667.appspot.com/manuals/smussla-bedside-table-shelf-unit-white__AA-2230202-2-2";
       break;
+    case '404.539.24':
+      FolderPath = "gs://idea-5a667.appspot.com/manuals/smussla-bedside-table-shelf-unit-white__AA-2230202-2-2";
+      break;
     case 'Vittsjö':
+      FolderPath = "gs://idea-5a667.appspot.com/manuals/vittsjoe-hylla-svartbrun-glas__AA-1388480-10-2";
+      break;
+    case '502.146.78':
       FolderPath = "gs://idea-5a667.appspot.com/manuals/vittsjoe-hylla-svartbrun-glas__AA-1388480-10-2";
       break;
     default:

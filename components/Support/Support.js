@@ -11,6 +11,7 @@ import { auth } from './../../firebaseConfig.js';
 
 export function Support({ route }) {
     const { ProductName } = route.params;
+    const ProductID = route.params.ProductID;
     const navigation = useNavigation(); // Get navigation object
     const options = ['Overall', 'Broken', 'Missing'];
     const [dropdownVisible, setDropdownVisible] = useState(true); // set initial state to true
@@ -43,15 +44,15 @@ export function Support({ route }) {
         <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}>
-        <View style={[styles.container_b, {flexDirection: 'column', width: '100%', height: '100%'}]}>
-            
+        <Text style={styles.tame_heading}> {ProductName} </Text>
+        <View style={[styles.container_b, {flexDirection: 'column',  width: '100%', height: '100%'}]}>
             <View style={[styles.container_wb, styles.heading, { height: '10%', marginTop: -200 }]}>
             <Text style={[ {marginLeft: -20}, styles.tame_heading]}>Art. no.</Text>
-            <Text style={[ {marginLeft: 25}, styles.tame_heading]}>{ProductName}</Text>
+            <Text style={[ {marginLeft: 25}, styles.tame_heading]}>{ProductID}</Text>
             </View>
 
-            <View style={[styles.container_wb, styles.heading, { height: '10%', marginTop: -200 }]}>
-            <Text style={[{ marginLeft: 55 }]}>{userEmail}</Text>
+            <View style={[styles.container_wb, styles.heading, { alignItems: 'center', height: '10%', marginTop: -200 }]}>
+            <Text style={[]}>{userEmail}</Text>
             <View style={[{ marginRight: -30 }, { flexDirection: 'absolute' }]}>
               <FontAwesome5 name="pen" size={24} color="#F6C324" />
             </View>
@@ -70,7 +71,7 @@ export function Support({ route }) {
             
             <View style={{marginTop: -200, marginBottom: -30, backgroundColor: 'white', borderRadius: 10}}>
             <TextInput
-                style={{height: 100,textAlignVertical: 'top'}}
+                style={{height: 100,textAlignVertical: 'top', padding: 10}}
                 placeholder="Type here in detail, regarding the issue..."
                 onChangeText={text => setIssueDetail(text)}
                 value={issueDetail}

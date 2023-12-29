@@ -90,12 +90,6 @@ export const styles = StyleSheet.create({
     backgroundColor: c.WHITE_COLOR,
     padding: 20,
   },
-  container_p: {
-    alignItems: 'center',
-    backgroundColor: c.WHITE_COLOR,
-    padding: 20,
-    marginBottom: 0,
-  },
   container_w: {
     flex: 1,
     alignItems: 'center',
@@ -228,6 +222,29 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '60%',
     alignSelf: 'center',
-   
+  },
+  historyItemDelete: {
+    backgroundColor: c.Y_PRIMARY,
+    padding: 6,
+    borderRadius: 53,
+    width: '20%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 5 // Adjust as needed to minimize space
+  },
+  historyItemContiner: {
+    flexDirection: 'row',
+    borderRadius: 20,
+    margin: 5,
+    width: '95%',
+    justifyContent: 'space-between',
+    backgroundColor: '#8AE2E0',
+    alignItems: 'center', // Align items vertically
+    padding: 5
+  },
+  itemName: {
+    fontSize: 16,
+    fontWeight: 'bold'
   }
+  
 });

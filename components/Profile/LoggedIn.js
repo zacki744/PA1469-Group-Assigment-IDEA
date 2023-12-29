@@ -15,7 +15,7 @@ export function LoggedIn({ user, handleLogout }) {
   const navigation = useNavigation(); // Get navigation object
 
   return (
-    <View style={styles.container_p}>
+    <View style={{...styles.container_w}}>
       <View style={styles.container_3}>
         <Image source={getImagePath()} style={styles.profilePicture} />
         <Text style={styles.heading}>{user.Name}</Text>
