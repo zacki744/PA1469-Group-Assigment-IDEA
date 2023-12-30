@@ -25,8 +25,8 @@ const saveSearchHistory = async (item) => {
     }
   } catch (error) {
     // Error saving data
-    console.log('Error saving data:', error);
-  }
+    alert('Error saving search history');
+    }
 };
 
 export default function ProduktView({ route }) {
@@ -43,16 +43,15 @@ export default function ProduktView({ route }) {
 
   return (
     <View style={styles.container_w}>
-        <Text style={styles.heading}>{ProductName}</Text>
-        
+      <Text style={styles.heading}>{ProductName}</Text>
       <View style={[styles.container_b, {flexDirection: 'column'}]}>
         <Text style={{marginLeft: 25}}>Product ID</Text>
         <Text style={[styles.heading, {marginLeft: 25}]}>{furnitureID[ProductName]}</Text>
         <Text style={{marginLeft: 40}}>Tools</Text>
         <View style={[{flexDirection: 'row', justifyContent: 'left', marginLeft: 15}]}>
-          <MaterialCommunityIcons name="screwdriver" size={24} color="black" />
-          <Ionicons name="md-hammer-outline" size={24} color="black" />
-          <Image source={getImagePath()} style={{...styles.searchImage, height: 25, width: 25}} />
+        <MaterialCommunityIcons name="screwdriver" size={24} color="black" />
+        <Ionicons name="md-hammer-outline" size={24} color="black" />
+        <Image source={getImagePath()} style={{...styles.searchImage, height: 25, width: 25}} />
         </View>
 
         <View style={[{marginTop: 20, marginBottom: 15}]}>

@@ -17,6 +17,7 @@ export function LoggedIn({ user, handleLogout }) {
   return (
     <View style={{...styles.container_w}}>
       <View style={styles.container_3}>
+        {/**Implememt the code here */}
         <Image source={getImagePath()} style={styles.profilePicture} />
         <Text style={styles.heading}>{user.Name}</Text>
       </View>

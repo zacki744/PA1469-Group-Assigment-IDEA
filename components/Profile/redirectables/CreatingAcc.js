@@ -5,7 +5,7 @@ import { CustomButton } from '../../obj/Button.js';
 import { collection, addDoc, getFirestore } from 'firebase/firestore/lite';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import app from './../../../firebaseConfig.js';
-
+import * as C from './../../../style/const.js';
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -60,6 +60,7 @@ export default function CreatingAcc({ setCreatingAccount, setUser, setIsLoggedIn
       setIsLoggedIn(true);
       setCreatingAccount(0);
     } catch (error) {
+
       if (error.code === 'auth/email-already-in-use') {
         setError('Email address is already in use.');
       } else if (error.code === 'auth/invalid-email') {
@@ -75,7 +76,7 @@ export default function CreatingAcc({ setCreatingAccount, setUser, setIsLoggedIn
   };
 
   return (
-    <View style={styles.container_p}>
+    <View style={styles.container_w}>
       <View style={styles.container_3}>
         <Text style={styles.heading}>Create Account</Text>
       </View>
@@ -117,9 +118,9 @@ export default function CreatingAcc({ setCreatingAccount, setUser, setIsLoggedIn
       <CustomButton
         title="Create Account"
         onPress={handleCreateAccount}
-        style={{ backgroundColor: 'green' }}
+        style={{ backgroundColor: C.SECONDARY_COLOR , margin: 20 }}
       />
-      <CustomButton style={{margin: 20}}
+      <CustomButton style={{margin: 20, backgroundColor: C.Y_SECONDARY}}
         title="Back"
         onPress={() => {
           // redirect to login

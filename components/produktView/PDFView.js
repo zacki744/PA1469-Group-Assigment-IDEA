@@ -70,7 +70,15 @@ export default function PDF_View({ route }) {
       setImageUris(images);
       setLoading(false);
     } catch (error) {
-      console.error('Error loading images:', error);
+      if (error.code === 'auth/network-request-failed') {
+        // Network request failed
+        // Display a message to the user
+        alert('Network error. Please check your internet connection and try again.');
+      }
+      else {
+        // Handle other error cases
+        alert('An error occurred. Please try again later. ' + error.code);
+      }
     }
   };
   useEffect(() => {

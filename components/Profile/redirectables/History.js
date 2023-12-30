@@ -54,14 +54,14 @@ export function History() {
   };
 
   return (
-    <View style={styles.container_p}>
+    <View style={{...styles.container_p, marginBottom: 15}}>
       <View style={styles.container_3}>
         <Text style={styles.heading}>History</Text>
       </View>
       {/* Display search history */}
       <FlatList
         data={history}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(index) => index.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.historyItemContiner} onPress={() => handleFurnitureClick(item.item)}>
             <View style={{...styles.container_2, width: '95%'}}>

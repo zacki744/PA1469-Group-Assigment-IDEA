@@ -53,6 +53,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     marginLeft: 20,
+    marginRight: 20,
     fontSize: 16,
     textAlign: "center",
     color: "black"
@@ -111,7 +112,7 @@ export const styles = StyleSheet.create({
   },
   container_b: {
     //flex: 1, // Set flex to evenly distribute child elements
-    flexDirection: 'row', // Use flexDirection: 'row' to align items horizontally
+    flexDirection: 'column', // Use flexDirection: 'row' to align items horizontally
     padding: 10,
     alignItems: 'left',
     justifyContent: 'space-evenly', // Use space-evenly to evenly space child elements
@@ -119,6 +120,7 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: '15%', // Add margin to create space between consecutive container_1 objects
     width: '100%',
+    padding: 20,
   },
   container_Y: {
       margin: 10,

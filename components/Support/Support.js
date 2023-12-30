@@ -52,7 +52,8 @@ export function Support({ route }) {
             </View>
 
             <View style={[styles.container_wb, styles.heading, { alignItems: 'center', height: '10%', marginTop: -200 }]}>
-            <Text style={[]}>{userEmail}</Text>
+            {userEmail !== '' && <Text style={[{ marginLeft: -20 }, styles.tame_heading]}>{userEmail}</Text>}
+            {!userEmail && <TextInput placeholder="Imput Email" style={[]}></TextInput>}
             <View style={[{ marginRight: -30 }, { flexDirection: 'absolute' }]}>
               <FontAwesome5 name="pen" size={24} color="#F6C324" />
             </View>

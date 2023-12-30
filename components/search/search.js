@@ -1,8 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TextInput, View, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import { styles } from './../../style/style.js'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather, Entypo } from "@expo/vector-icons";
 
 
@@ -32,26 +31,68 @@ export default function Search() {
     'Smussla': '404.539.24',
     'Vittsjö': '502.146.78'
   };
+  //as above but reversed, so that you can search with
+  const IDFurniture = {
+    '180.473.62': 'Bestå',
+    '200.114.08': 'Älvdalen',
+    '302.130.76': 'Alex',
+    '404.539.24': 'Smussla',
+    '502.146.78': 'Vittsjö'
+  }
   const [filteredFurniture, setFilteredFurniture] = useState(furnitureImages);
 
 
   const setClicked = (ifClicked) => {
     setState({ ...state, clicked: ifClicked });
   }
-
-  const updateSearch = (search) => {
+  
+  const updateSearch = (text) => {
     const filteredItems = Object.keys(furnitureImages).filter(item =>
-      item.toLowerCase().includes(search.toLowerCase()) || furnitureID[item].includes(search)
+      item.toLowerCase().includes(text.toLowerCase()) || furnitureID[item].includes(text)
     );
-    setState({ ...state, search });
+    setState({ ...state, search: text });
     setFilteredFurniture(filteredItems);
-  }
+  };
 
   const handleFurnitureClick = (furniture) => {
-    setClicked(false);
-    updateSearch(furniture);
-    // Navigate to ProduktView with the selected furniture
-    navigation.navigate('ProduktViewSearch', { ProductName: furniture });
+    //check if search variable exists in furnitureID or furnitureImages
+    //if it does, set the search variable to the furnitureID
+    //else, set the search variable to the furniture
+    const filterId = Object.keys(IDFurniture).filter(item =>
+      item.toLowerCase().includes(furniture.toLowerCase())
+    );
+    try {
+      if (filteredFurniture.includes(furniture)) {
+        setClicked(false);
+        updateSearch(furniture);
+        // Navigate to ProduktView with the selected furniture
+        navigation.navigate('ProduktViewSearch', { ProductName: furniture });
+      } else if (filteredFurniture.includes(IDFurniture[filterId.at(0)])) {
+        setClicked(false);
+        updateSearch(IDFurniture[filterId.at(0)]);
+        // Navigate to ProduktView with the selected furniture
+        navigation.navigate('ProduktViewSearch', { ProductName: IDFurniture[filterId.at(0)] });
+      } else if (filteredFurniture.length > 0) {
+        setClicked(false);
+        updateSearch(filteredFurniture.at(0));
+        // Navigate to ProduktView with the selected furniture
+        navigation.navigate('ProduktViewSearch', { ProductName: filteredFurniture.at(0) });
+      } else if (filterId.length > 0) {
+        furniture = filterId.at(0);
+        setClicked(false);
+        updateSearch(furniture);
+        // Navigate to ProduktView with the selected furniture
+        navigation.navigate('ProduktViewSearch', { ProductName: furniture });
+      }
+      else {
+        alert("No such product exists");
+        return;
+      }
+    }
+    catch (error) {
+      alert("Error: " + error);
+      return;
+    }
   };
   
   return (
@@ -76,6 +117,7 @@ export default function Search() {
               // Simulating a logout action - replace this with your actual authentication logic
               // For demo purposes, we will just set isLoggedIn state to false
               setClicked(false);
+              updateSearch(search);
               handleFurnitureClick(search);
             }} 
             />
@@ -86,46 +128,35 @@ export default function Search() {
             style={styles.input}
             placeholder="Search"
             value={search}
-            onChangeText={updateSearch}
-            onFocus={() => {
+            onChangeText={(text) => {
               setClicked(true);
+              updateSearch(text);
             }}
-            //onSubmitEditing={() => handleFurnitureClick(search)}
+            onFocus={() => setClicked(true)}
+            onSubmitEditing={() => handleFurnitureClick(search)}
           />
-          {/* cross Icon, depending on whether the search bar is clicked or not */}
-          {clicked && (
-            <Entypo
-              name="cross"
-              size={20}
-              color="black"
-              style={{ padding: 3, marginLeft: -19 }}
-              onPress={() => {
-                updateSearch("");
-                setClicked(false);
-              }}
-            />
-          )}
+
         </View>
       </View>
      {/* Display the filtered furniture list */}
-      {clicked && (
+     {clicked && filteredFurniture.length > 0 && (
       <View style={{ flex: 1, margin: -30, marginTop: 15 }}>
-      <FlatList
-        data={filteredFurniture}
-        keyExtractor={(item) => item.toString()}
-        numColumns={2} // Change this to the number of columns you want
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => handleFurnitureClick(item)}>
-            <Image source={furnitureImages[item]} style={{width: 150, height: 200, margin: 10, marginTop: 20}} />
-            <Text style={{textAlign: 'center'}}>{furnitureID[item]}</Text>
-          </TouchableOpacity>
-        )}
-      />
+        <FlatList
+          data={filteredFurniture}
+          keyExtractor={(item) => item.toString()}
+          numColumns={2} // Change this to the number of columns you want
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => handleFurnitureClick(item)}>
+              <Image source={furnitureImages[item]} style={{width: 150, height: 200, margin: 10, marginTop: 20}} />
+              <Text style={{textAlign: 'center'}}>{furnitureID[item]}</Text>
+            </TouchableOpacity>
+          )}
+        />
       </View>
-      )}
-      {!clicked && (
-        <Image source={getImagePath()} style={{ marginLeft: 7}} />
-        )}
+    )}
+    {clicked && filteredFurniture.length === 0 && (
+      <Image source={getImagePath()} style={{ marginLeft: 7}} />
+    )}
     </View>
   );
 }

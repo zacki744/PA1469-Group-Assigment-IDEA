@@ -1,4 +1,4 @@
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Text, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { styles } from './../../style/style.js';
 import * as C from './../../style/const.js';
@@ -9,6 +9,12 @@ import { db, auth } from './../../firebaseConfig.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, getDocs, query, where } from 'firebase/firestore/lite';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'; // Remove initializeAuth from here
+
+const getImagePath = () => {
+  // Perform your image lookup logic here
+  // If lookup fails, return the default path
+  return require('./../../assets/default-profile-picture.jpg'); // Adjust the default path as needed
+};
 
 export default function Profile() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -77,8 +83,19 @@ export default function Profile() {
       setUser(userData);
       setIsLoggedIn(true);
     } catch (error) {
-      console.error('Error logging in:', error);
-      console.log('Incorrect email or password');
+      if (error.code === 'auth/network-request-failed') {
+        // Network request failed
+        // Display a message to the user
+        alert('Network error. Please check your internet connection and try again.');
+      } else if (error.code === 'auth/invalid-login-credentials') {
+        // User not found
+        // Display a message to the user
+        alert('Incorrect email or password');
+      }
+      else {
+        // Handle other error cases
+        alert('An error occurred. Please try again later.');
+      }
     }
   };
 
@@ -93,7 +110,14 @@ export default function Profile() {
       setEmail('');
       setPassword('');
     } catch (error) {
-      console.error('Error logging out:', error);
+      if (error.code === 'auth/network-request-failed') {
+        // Network request failed
+        // Display a message to the user
+        alert('Network error. Please check your internet connection and try again.');
+      } else {
+        // Handle other error cases
+        alert('An error occurred. Please try again later.');
+      }
     }
   };
 
@@ -103,20 +127,45 @@ export default function Profile() {
 
   if (!isLoggedIn) {
     return (
-      <View style={styles.container}>
-        <View style={styles.inputView}>
-          <TextInput style={styles.TextInput} placeholder="Email" onChangeText={(text) => setEmail(text)} />
-        </View>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Password"
-            secureTextEntry={true}
-            onChangeText={(text) => setPassword(text)}
+      <View style={{ flex: 1, backgroundColor: C.PRIMARY_COLOR, justifyContent: 'center', alignItems: 'center' }}>
+        
+        <View style={{ backgroundColor: C.SECONDARY_COLOR, width: '80%', padding: 20, borderRadius: 10, alignItems: 'center' }}>
+          <View style={{ backgroundColor: C.Y_PRIMARY, height: 5, width: '80%', marginTop: 65, marginBottom: 20, position: 'absolute', borderRadius: 40 }} />
+          <View style={{
+            backgroundColor: C.Y_PRIMARY,
+            height: 110,
+            width: 110,
+            marginTop: 16,
+            marginBottom: 20,
+            position: 'absolute',
+            borderRadius: 60,
+          }} />
+          <Image
+            source={getImagePath()}
+            style={{
+              width: 100,
+              height: 100,
+              marginBottom: 20,
+              borderRadius: 50,
+
+            }}
           />
+
+          <Text style={{ fontSize: 30, color: C.WHITE_COLOR, marginBottom: 20 }}>Sign In</Text>
+          <View style={{...styles.inputView, width: '100%'}}>
+            <TextInput style={styles.TextInput} placeholder="Email" onChangeText={(text) => setEmail(text)} />
+          </View>
+          <View style={{...styles.inputView, width: '100%'}}>
+            <TextInput
+              style={{...styles.TextInput }}
+              placeholder="Password"
+              secureTextEntry={true}
+              onChangeText={(text) => setPassword(text)}
+            />
+          </View>
+          <CustomButton title="Sign In" onPress={handleLogin} style={{ backgroundColor: C.Y_PRIMARY, marginTop: 20 }} />
+          <CustomButton title="Create Account" onPress={createAccount} style={{ margin: 20 }} />
         </View>
-        <CustomButton title="Login" onPress={handleLogin} style={{ backgroundColor: C.SECONDARY_COLOR }} />
-        <CustomButton title="Create Account" onPress={createAccount} style={{ backgroundColor: C.GREY_COLOR, margin: 20 }} />
       </View>
     );
   } else {
