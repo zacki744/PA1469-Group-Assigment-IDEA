@@ -20,7 +20,7 @@ export function Support({ route }) {
     const [userEmail, setUserEmail] = useState('');
     const handleButtonClick = () => {
         // Navigate to ProduktView with the selected furniture
-        navigation.navigate('Receipt', { ProductName: ProductName });
+        navigation.navigate('Receipt', { ProductName: ProductName, ProductID: ProductID });
     };
     useEffect(() => {
         // Set up the listener to track user authentication state changes
@@ -54,9 +54,11 @@ export function Support({ route }) {
             <View style={[styles.container_wb, styles.heading, { alignItems: 'center', height: '10%', marginTop: -200 }]}>
             {userEmail !== '' && <Text style={[{ marginLeft: -20 }, styles.tame_heading]}>{userEmail}</Text>}
             {!userEmail && <TextInput placeholder="Imput Email" style={[]}></TextInput>}
+            <TouchableOpacity onPress={() => setUserEmail(false)}>
             <View style={[{ marginRight: -30 }, { flexDirection: 'absolute' }]}>
               <FontAwesome5 name="pen" size={24} color="#F6C324" />
             </View>
+            </TouchableOpacity>
           </View>
 
             <View style={[styles.container_wb, styles.heading, { height: '10%', marginTop: -200}]}>
