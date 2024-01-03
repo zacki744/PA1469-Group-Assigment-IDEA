@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../../style/style.js';
 import { CustomButton } from '../../obj/Button.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getSearchHistory, deleteHistoryItem } from './../../../src/javascript.js'
 
 export function History() {
   const [history, setHistory] = useState([]);
@@ -38,16 +39,6 @@ export function History() {
       let historyList = history ? JSON.parse(history) : [];
       historyList = historyList.filter(item => item.date !== itemToDelete.date);
       await AsyncStorage.setItem('searchHistory', JSON.stringify(historyList));
-      setHistory(historyList);
-    } catch (error) {
-      return [];
-    }
-  };
-
-  const getSearchHistory = async () => {
-    try {
-      const history = await AsyncStorage.getItem('searchHistory');
-      return history ? JSON.parse(history) : [];
     } catch (error) {
       return [];
     }
@@ -75,7 +66,7 @@ export function History() {
               </Text>
               <CustomButton
                 style={styles.historyItemDelete} title="Delete"
-                onPress={() => deleteHistoryItem(item)}
+                onPress={() => { try {setHistory(deleteHistoryItem(item))} catch{alert('error deleting object')}}}
               />
             </View>
           </TouchableOpacity>

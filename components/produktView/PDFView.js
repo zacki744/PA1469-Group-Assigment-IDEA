@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
-import { storage } from './../../firebaseConfig.js';
+import { storage } from '../../config/firebaseConfig.js';
 import { WebView } from 'react-native-webview';
 import { ref, getDownloadURL, listAll } from 'firebase/storage';
 import { AntDesign } from '@expo/vector-icons';

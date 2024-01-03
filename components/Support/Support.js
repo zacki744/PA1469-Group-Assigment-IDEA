@@ -6,7 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './../../firebaseConfig.js';
+import { auth } from './../../config/firebaseConfig.js';
 
 
 export function Support({ route }) {

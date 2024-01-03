@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "IDEA",
+    "plugins": ["@config-plugins/detox"],
     "slug": "IDEA",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,10 +22,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.zacki744.IDEA"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "aae7ac26-544c-4d72-9394-aed418e9af2f"
+      }
     }
   }
 }

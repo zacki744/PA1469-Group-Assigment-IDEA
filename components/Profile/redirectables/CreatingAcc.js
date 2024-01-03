@@ -4,12 +4,12 @@ import { styles } from '../../../style/style.js';
 import { CustomButton } from '../../obj/Button.js';
 import { collection, addDoc, getFirestore } from 'firebase/firestore/lite';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-import app from './../../../firebaseConfig.js';
+import app from './../../../config/firebaseConfig.js';
 import * as C from './../../../style/const.js';
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-async function createUserInFirestore(name, email, uid) {
+export async function createUserInFirestore(name, email, uid) {
   const userCollection = collection(db, 'User');
   await addDoc(userCollection, {
     Name: name,
@@ -17,12 +17,9 @@ async function createUserInFirestore(name, email, uid) {
     UID: uid, // Assuming UID is a unique identifier for the user
   });
 }
-
 async function createUser(name, email, password, auth) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    console.log('User created!', userCredential.user);
-
     // Write user details to Firestore
     await createUserInFirestore(name, email, userCredential.user.uid);
 

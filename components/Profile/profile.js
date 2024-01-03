@@ -5,11 +5,11 @@ import * as C from './../../style/const.js';
 import { CustomButton } from './../obj/Button.js';
 import { LoggedIn } from './LoggedIn.js';
 import CreatingAcc from './redirectables/CreatingAcc.js';
-import { db, auth } from './../../firebaseConfig.js';
+import { db, auth } from './../../config/firebaseConfig.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, getDocs, query, where } from 'firebase/firestore/lite';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'; // Remove initializeAuth from here
-
+import {removeUserFromAsyncStorage, saveUserToAsyncStorage } from './../../src/javascript.js'
 const getImagePath = () => {
   // Perform your image lookup logic here
   // If lookup fails, return the default path
@@ -48,8 +48,7 @@ export default function Profile() {
           const userData = querySnapshot.docs.map((doc) => doc.data())[0];
   
           // Save user and details to AsyncStorage
-          AsyncStorage.setItem('user', JSON.stringify(userData));
-  
+          saveUserToAsyncStorage(userData);
           setUser(userData);
         } catch (error) {
           console.error('Error fetching user details:', error);
@@ -78,7 +77,7 @@ export default function Profile() {
       const userData = querySnapshot.docs.map((doc) => doc.data())[0];
 
       // Save user and details to AsyncStorage
-      AsyncStorage.setItem('user', JSON.stringify(userData));
+      saveUserToAsyncStorage(userData);
 
       setUser(userData);
       setIsLoggedIn(true);
@@ -104,8 +103,7 @@ export default function Profile() {
       await signOut(auth);
 
       // Remove user from AsyncStorage
-      AsyncStorage.removeItem('user');
-
+      removeUserFromAsyncStorage();
       setIsLoggedIn(false);
       setEmail('');
       setPassword('');

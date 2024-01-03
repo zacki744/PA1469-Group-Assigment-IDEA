@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { TextInput, View, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import { styles } from './../../style/style.js'
 import { Feather, Entypo } from "@expo/vector-icons";
-
+import { furnitureImages, IDFurniture, furnitureID } from './../../src/javascript.js'
 
 const getImagePath = () => {
   // Perform your image lookup logic here
@@ -16,29 +16,6 @@ export default function Search() {
   const [state, setState] = useState({ search: '', clicked: false });
   const { search, clicked } = state;
   const navigation = useNavigation(); // Get navigation object
-
-  const furnitureImages = {
-    'Bestå': require('./../../assets/BESTÅ_logga.png'),
-    'Älvdalen': require('./../../assets/älvdalen_thumbnail-1.png'),
-    'Alex': require('./../../assets/Alex_thumbnail.png'),
-    'Smussla': require('./../../assets/smussla_thumbnail-1.png'),
-    'Vittsjö': require('./../../assets/VITTSJÖ_thumbnail-1.png')
-  };
-  const furnitureID = {
-    'Bestå': '180.473.62',
-    'Älvdalen': '200.114.08',
-    'Alex': '302.130.76',
-    'Smussla': '404.539.24',
-    'Vittsjö': '502.146.78'
-  };
-  //as above but reversed, so that you can search with
-  const IDFurniture = {
-    '180.473.62': 'Bestå',
-    '200.114.08': 'Älvdalen',
-    '302.130.76': 'Alex',
-    '404.539.24': 'Smussla',
-    '502.146.78': 'Vittsjö'
-  }
   const [filteredFurniture, setFilteredFurniture] = useState(furnitureImages);
 
 
@@ -154,7 +131,7 @@ export default function Search() {
         />
       </View>
     )}
-    {clicked && filteredFurniture.length === 0 && (
+    {!clicked && (
       <Image source={getImagePath()} style={{ marginLeft: 7}} />
     )}
     </View>
