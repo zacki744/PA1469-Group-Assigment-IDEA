@@ -9,17 +9,19 @@ import * as C from './../../../style/const.js';
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export async function createUserInFirestore(name, email, uid) {
+async function createUserInFirestore(name, email, uid) {
   const userCollection = collection(db, 'User');
   await addDoc(userCollection, {
     Name: name,
     Email: email,
-    UID: uid, // Assuming UID is a unique identifier for the user
+    UID: uid, 
   });
 }
+
 async function createUser(name, email, password, auth) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
     // Write user details to Firestore
     await createUserInFirestore(name, email, userCredential.user.uid);
 
