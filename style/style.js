@@ -186,16 +186,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
-   
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  paragraph: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
   footer: {
     position: 'absolute',
     bottom: 0,
