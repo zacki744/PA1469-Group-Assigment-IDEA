@@ -3,8 +3,7 @@ import React from 'react';
 import { styles } from '../../style/style.js';
 import { useNavigation } from '@react-navigation/native';
 import { CustomButton_Y,CustomImageButton} from '../obj/Button.js';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getImagePath = () => {

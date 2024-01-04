@@ -1,5 +1,4 @@
 import React from 'react';
-import { render, act } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //import { getSearchHistory } from './components/Profile/redirectables/History.js';
 import * as functions from '../../src/javascript.js';
@@ -124,7 +123,6 @@ describe('User Functions in AsyncStorage', () => {
     AsyncStorage.removeItem.mockReset();
 
     await functions.removeUserFromAsyncStorage();
-
     expect(AsyncStorage.removeItem).not.toHaveBeenCalled();
   });
 });
