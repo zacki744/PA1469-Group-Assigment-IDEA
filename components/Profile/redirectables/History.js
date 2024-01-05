@@ -61,10 +61,10 @@ export function History() {
       {/* Display search history */}
       <FlatList
         data={history}
-        keyExtractor={(index) => index.toString()}
+        keyExtractor={(item) => item.item.toString()} // Use item.item as the key
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.historyItemContiner} onPress={() => handleFurnitureClick(item.item)}>
-            <View style={{...styles.container_2, width: '95%'}}>
+            <View style={{ ...styles.container_2, width: '95%' }}>
               <Text style={styles.itemName}>{item.item}</Text>
               <Text style={styles.itemDate}>
                 {new Date(item.date).toLocaleDateString('en-CA', {
@@ -87,6 +87,7 @@ export function History() {
           />
         }
       />
+
     </View>
   );  
 }
