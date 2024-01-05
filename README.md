@@ -28,7 +28,7 @@ Also not every merger contributes the specific push to the author and just inclu
    ```
    It should not be any issues and the expo SDK should be version 49.0.0
    
-3. ** installation of the app **
+3. **installation of the app**
    you will have to go to play store and download Expo Go and when you run the projekt it requires that you scann the provided qr code from the terminal
    
 4. **Run the Project:**
