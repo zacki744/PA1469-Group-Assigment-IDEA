@@ -10,7 +10,8 @@ Also not every merger contributes the specific push to the author and just inclu
 ### Prerequisites
 - [Node.js](https://nodejs.org/en/download/package-manager)
 - [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (Node Package Manager)
-- [Expo CLI](https://docs.expo.dev/more/expo-cli/)
+- [Expo Cli](https://docs.expo.dev/archive/expo-cli/)
+- [Expo CLI Guide](https://docs.expo.dev/more/expo-cli/) (Expo Cli usage guide)
 
 ### Instructions
 1. **Install Dependencies:**
