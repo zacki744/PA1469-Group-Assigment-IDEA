@@ -15,13 +15,6 @@ export const IDFurniture = {
     '404.539.24': 'Smussla',
     '502.146.78': 'Vittsjö'
 }
-export const furnitureImages = {
-  'Bestå': require('./../assets/BESTÅ_logga.png'),
-  'Älvdalen': require('./../assets/älvdalen_thumbnail-1.png'),
-  'Alex': require('./../assets/Alex_thumbnail.png'),
-  'Smussla': require('./../assets/smussla_thumbnail-1.png'),
-  'Vittsjö': require('./../assets/VITTSJÖ_thumbnail-1.png')
-};
 
 //functons for logic
 export const saveSearchHistory = async (item) => {

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { TextInput, View, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import { styles } from './../../style/style.js'
 import { Feather, Entypo } from "@expo/vector-icons";
-import { furnitureImages, IDFurniture, furnitureID } from './../../src/javascript.js'
+import { IDFurniture, furnitureID } from './../../src/javascript.js'
 
 const getImagePath = () => {
   // Perform your image lookup logic here
@@ -11,6 +11,13 @@ const getImagePath = () => {
   return require('./../../assets/better_lamp.png'); // Adjust the default path as needed
 };
 
+const furnitureImages = {
+  'Bestå': require('./../../assets/BESTÅ_logga.png'),
+  'Älvdalen': require('./../../assets/älvdalen_thumbnail-1.png'),
+  'Alex': require('./../../assets/Alex_thumbnail.png'),
+  'Smussla': require('./../../assets/smussla_thumbnail-1.png'),
+  'Vittsjö': require('./../../assets/VITTSJÖ_thumbnail-1.png')
+};
 
 export default function Search() {
   const [state, setState] = useState({ search: '', clicked: false });
